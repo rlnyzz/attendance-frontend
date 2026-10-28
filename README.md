@@ -23,7 +23,7 @@ React + Vite + TypeScript. Общается с бэкендом `AttendanceJourn
 1. cd путь/к/SPO_KR2-main
 2. docker compose up -d
 
-##💻 Запуск фронтенда
+**💻 Запуск фронтенда**
 1. Перейди в папку фронтенда:
    cd attendance-frontend
 2. npm install --legacy-peer-deps
