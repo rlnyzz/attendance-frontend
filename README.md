@@ -1,75 +1,38 @@
-# React + TypeScript + Vite
+# Журнал посещаемости лекций — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite + TypeScript. Общается с бэкендом `AttendanceJournal.Api` по HTTP.
 
-Currently, two official plugins are available:
+## 📋 Требования
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Node.js 18+** (проверить: `node -v`)
+- Запущенный бэкенд на `http://localhost:5080` (или `8080`, если через Docker)
+- **PostgreSQL** (если бэкенд запускается без Docker)
 
-## React Compiler
+## 🚀 Запуск бэкенда (в отдельном терминале)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Вариант А — через `dotnet run` (рекомендуется)
 
-## Expanding the ESLint configuration
+1. Убедись, что PostgreSQL запущен и база `attendance` создана.
+2. Перейди в папку бэкенда:
+   ```bash
+   cd путь/к/SPO_KR2-main/src/AttendanceJournal.Api
+3. dotnet run
+4. Проверь: http://localhost:5080/health → {"status":"ok"}
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Вариант B - через Docker
+1. cd путь/к/SPO_KR2-main
+2. docker compose up -d
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
+##💻 Запуск фронтенда
+1. Перейди в папку фронтенда:
+   cd attendance-frontend
+2. npm install --legacy-peer-deps
+3. proxy: {
+  '/api': {
+    target: 'http://localhost:5080', // 8080 — если Docker, 5080 — если dotnet run
+    changeOrigin: true,
+    rewrite: (path) => path.replace(/^\/api/, ''),
   },
-])
+},
+4. npm run dev
 
-```
-
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
