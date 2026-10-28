@@ -27,12 +27,6 @@ React + Vite + TypeScript. Общается с бэкендом `AttendanceJourn
 1. Перейди в папку фронтенда:
    cd attendance-frontend
 2. npm install --legacy-peer-deps
-3. proxy: {
-  '/api': {
-    target: 'http://localhost:5080', // 8080 — если Docker, 5080 — если dotnet run
-    changeOrigin: true,
-    rewrite: (path) => path.replace(/^\/api/, ''),
-  },
-},
+3. target: 'http://localhost:5080', // 8080 — если Docker, 5080 — если dotnet run
 4. npm run dev
 
